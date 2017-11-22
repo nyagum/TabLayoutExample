@@ -4,49 +4,34 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity{
 
-    //This is our tablayout
     private TabLayout tabLayout;
-
-    //This is our viewPager
-    private NonSwipeableViewPager viewPager;
-
+    private ViewPager viewPager;
+    private PagerAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //Initializing the tablayout
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
-        //Adding the tabs using addTab() method
-        TabLayout.Tab tab1=tabLayout.newTab();
-        TabLayout.Tab tab2=tabLayout.newTab();
-        TabLayout.Tab tab3=tabLayout.newTab();
-        TabLayout.Tab tab4=tabLayout.newTab();
-        tab1.setIcon(R.mipmap.ic_launcher);
-        tabLayout.addTab(tab1);
-        tabLayout.addTab(tab2);
-        tabLayout.addTab(tab3);
-        tabLayout.addTab(tab4);
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
 
-        //Initializing viewPager
-        viewPager = (NonSwipeableViewPager) findViewById(R.id.pager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        //Creating our pager adapter
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
-        //Adding adapter to pager
         viewPager.setAdapter(adapter);
-
-        //Adding onTabSelectedListener to swipe views
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position and replace the fragment accordingly
@@ -90,4 +75,6 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
+
 }
