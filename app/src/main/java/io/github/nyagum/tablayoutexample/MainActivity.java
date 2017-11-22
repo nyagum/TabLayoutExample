@@ -30,7 +30,51 @@ public class MainActivity extends AppCompatActivity{
         adapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // get the current selected tab's position and replace the fragment accordingly
+                Fragment fragment = null;
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment = new Tab1();
+                        ft.replace(R.id.tab1, fragment);
+                        break;
+                    case 1:
+                        fragment = new Tab2();
+                        ft.replace(R.id.tab2, fragment);
+                        break;
+                    case 2:
+                        fragment = new Tab3();
+                        ft.replace(R.id.tab3, fragment);
+                        break;
+                    case 3:
+                        fragment = new Tab4();
+                        ft.replace(R.id.tab4, fragment);
+                        break;
+                }
 
 
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+            }
+
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
+
+
 }
